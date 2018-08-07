@@ -10,7 +10,7 @@ import { ProductManagementViewContainer } from '../product-management-container'
 import { createExtensionObject } from '../util/extension';
 import { createSignedToken } from '../util/token';
 import { fetchManifest, fetchExtensionManifest, fetchUserInfo } from '../util/api';
-import { ExtensionViews, BroadcasterConfig, LiveConfig, Configurations, ProductManagement } from '../constants/nav-items'
+import { ExtensionViews, ProductManagement } from '../constants/nav-items'
 import { ViewerTypes } from '../constants/viewer-types';
 import { OverlaySizes } from '../constants/overlay-sizes';
 import { IdentityOptions } from '../constants/identity-options';
@@ -31,8 +31,6 @@ export interface ReduxDispatchProps {
   saveManifest: (manifest: ExtensionManifest) => void;
   userLogin: (userSession: UserSession) => void;
 }
-
-export interface RigProps { }
 
 interface State {
   apiHost: string;
@@ -55,7 +53,7 @@ interface State {
   error: string;
 }
 
-type Props = RigProps & ReduxDispatchProps & ReduxStateProps;
+type Props = ReduxDispatchProps & ReduxStateProps;
 
 export class RigComponent extends React.Component<Props, State> {
   public state: State = {
