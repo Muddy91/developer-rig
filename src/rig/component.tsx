@@ -148,7 +148,6 @@ export class RigComponent extends React.Component<Props, State> {
     const tokenSpec: TokenSpec = {
       role: RigRole,
       secret: this.state.secret,
-      channelId: this.state.channelId,
       userId: this.state.userId,
     };
     const token = createSignedToken(tokenSpec);
@@ -302,24 +301,22 @@ export class RigComponent extends React.Component<Props, State> {
 
   private fetchInitialConfiguration() {
     if (this.state.userName) {
-      if (this.state.clientId && this.state.version && this.state.channelId && this.state.secret) {
+      if (this.state.clientId && this.state.version && this.state.secret) {
         fetchUserByName(this.state.apiHost, this.state.clientId, this.state.userName).then((user) => {
           const tokenSpec: TokenSpec = {
             role: RigRole,
             secret: this.state.secret,
-            channelId: this.state.channelId,
             userId: user['id'],
           };
           const token = createSignedToken(tokenSpec);
           return fetchExtensionManifest(this.state.apiHost, this.state.clientId, this.state.version, token);
         })
-        .then(this.onConfigurationSuccess)
-        .catch(this.onConfigurationError);
+          .then(this.onConfigurationSuccess)
+          .catch(this.onConfigurationError);
       } else {
         this.onConfigurationError(missingConfigurations({
           'EXT_CLIENT_ID': this.state.clientId,
           'EXT_VERSION': this.state.version,
-          'EXT_CHANNEL': this.state.channelId,
           'EXT_SECRET': this.state.secret,
         }));
       }
